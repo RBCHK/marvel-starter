@@ -23,6 +23,14 @@ class RandomChar extends Component {
 		});
 	};
 
+	cutDescription = description => {
+		if (description.length > 220) {
+			return description.slice(0, 220) + '...';
+		}
+
+		return description;
+	};
+
 	render() {
 		const { character } = this.state;
 		const { name, description, thumbnail, homepage, wiki } = character;
@@ -30,10 +38,20 @@ class RandomChar extends Component {
 		return (
 			<div className='randomchar'>
 				<div className='randomchar__block'>
-					<img src={thumbnail} alt='Random character' className='randomchar__img' />
+					<img
+						src={thumbnail}
+						alt='Random character'
+						className='randomchar__img'
+					/>
 					<div className='randomchar__info'>
 						<p className='randomchar__name'>{name}</p>
-						<p className='randomchar__descr'>{description}</p>
+						{description ? (
+							<p className='randomchar__descr'>
+								{this.cutDescription(description)}
+							</p>
+						) : (
+							<p>Ooops.. Description not found</p>
+						)}
 						<div className='randomchar__btns'>
 							<a href={homepage} className='button button__main'>
 								<div className='inner'>homepage</div>
@@ -54,7 +72,11 @@ class RandomChar extends Component {
 					<button className='button button__main'>
 						<div className='inner'>try it</div>
 					</button>
-					<img src={mjolnir} alt='mjolnir' className='randomchar__decoration' />
+					<img
+						src={mjolnir}
+						alt='mjolnir'
+						className='randomchar__decoration'
+					/>
 				</div>
 			</div>
 		);
