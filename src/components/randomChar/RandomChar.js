@@ -4,10 +4,10 @@ import MarvelService from '../../services/MarvelService';
 import './randomChar.scss';
 
 class RandomChar extends Component {
-	//constructor(props) {
-	//	super(props);
-	//	this.updateCharacter();
-	//}
+	constructor(props) {
+		super(props);
+		this.updateCharacter();
+	}
 
 	state = {
 		name: null,
@@ -17,15 +17,15 @@ class RandomChar extends Component {
 		wiki: null,
 	};
 
-	//marvelService = new MarvelService();
+	marvelService = new MarvelService();
 
-	//updateCharacter = () => {
-	//	const id = 1011005;
+	updateCharacter = () => {
+		const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
 
-	//	this.marvelService.getCharacter(id).then(({ data }) => {
-	//		console.log(data);
-	//	});
-	//};
+		this.marvelService.getCharacter(id).then(obj => {
+			this.setState(obj);
+		});
+	};
 
 	render() {
 		const { name, description, thumbnail, homepage, wiki } = this.state;
