@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import mjolnir from '../../resources/img/mjolnir.png';
 import MarvelService from '../../services/MarvelService';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/Spinner';
 import './randomChar.scss';
 
@@ -13,6 +14,7 @@ class RandomChar extends Component {
 	state = {
 		character: {},
 		loading: true,
+		error: false,
 	};
 
 	marvelService = new MarvelService();
@@ -20,31 +22,42 @@ class RandomChar extends Component {
 	updateCharacter = () => {
 		const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
 
-		this.marvelService.getCharacter(id).then(obj => {
-			this.setState({
-				character: obj,
-				loading: false,
+		this.marvelService
+			.getCharacter(id)
+			.then(obj => {
+				this.setState({
+					character: obj,
+					loading: false,
+				});
+			})
+			.catch(() => {
+				this.setState({
+					loading: false,
+					error: true,
+				});
 			});
-		});
 	};
 
 	cutDescription = description => {
-		if (description.length > 220) {
-			return description.slice(0, 220) + '...';
+		if (description.length > 200) {
+			return description.slice(0, 200) + '...';
 		}
 
 		return description;
 	};
 
 	render() {
-		const { character, loading } = this.state;
+		const { character, loading, error } = this.state;
 		const { name, description, thumbnail, homepage, wiki } = character;
+
+		const errorMessage = error ? <ErrorMessage /> : null;
+		const spinner = loading ? <Spinner /> : null;
 
 		return (
 			<div className='randomchar'>
-				{loading ? (
-					<Spinner />
-				) : (
+				{errorMessage}
+				{spinner}
+				{loading || error ? null : (
 					<div className='randomchar__block'>
 						<img src={thumbnail} alt='Random character' className='randomchar__img' />
 						<div className='randomchar__info'>
