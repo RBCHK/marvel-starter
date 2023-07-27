@@ -20,13 +20,15 @@ class MarvelService {
 		return this._transformCharacter(res);
 	};
 
-	_transformCharacter = obj => {
+	_transformCharacter = res => {
+		const { name, description, thumbnail, urls } = res.data.results[0];
+
 		return {
-			name: obj.data.results[0].name,
-			description: obj.data.results[0].description,
-			thumbnail: `${obj.data.results[0].thumbnail.path}.${obj.data.results[0].thumbnail.extension}`,
-			homepage: obj.data.results[0].urls[0].url,
-			wiki: obj.data.results[0].urls[1].url,
+			name,
+			description,
+			thumbnail: `${thumbnail.path}.${thumbnail.extension}`,
+			homepage: urls[0].url,
+			wiki: urls[1].url,
 		};
 	};
 }
