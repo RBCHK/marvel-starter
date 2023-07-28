@@ -52,7 +52,6 @@ class RandomChar extends Component {
 	render() {
 		const { character, loading, error, imgNotFound } = this.state;
 		const { name, description, thumbnail, homepage, wiki } = character;
-		console.log(thumbnail);
 
 		const errorMessage = error ? <ErrorMessage /> : null;
 		const spinner = loading ? <Spinner /> : null;
@@ -96,7 +95,9 @@ class RandomChar extends Component {
 					</p>
 					<p className='randomchar__title'>Or choose another one</p>
 					<button className='button button__main'>
-						<div className='inner'>try it</div>
+						<div className='inner' onClick={this.updateCharacter}>
+							try it
+						</div>
 					</button>
 					<img src={mjolnir} alt='mjolnir' className='randomchar__decoration' />
 				</div>
