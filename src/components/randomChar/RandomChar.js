@@ -6,11 +6,6 @@ import Spinner from '../spinner/Spinner';
 import './randomChar.scss';
 
 class RandomChar extends Component {
-	constructor(props) {
-		super(props);
-		this.updateCharacter();
-	}
-
 	state = {
 		character: {},
 		loading: true,
@@ -18,6 +13,10 @@ class RandomChar extends Component {
 	};
 
 	marvelService = new MarvelService();
+
+	componentDidMount() {
+		this.updateCharacter();
+	}
 
 	updateCharacter = () => {
 		const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
