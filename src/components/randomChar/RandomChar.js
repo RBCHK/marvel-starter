@@ -10,6 +10,7 @@ class RandomChar extends Component {
 		character: {},
 		loading: true,
 		error: false,
+		imgNotFound: true,
 	};
 
 	marvelService = new MarvelService();
@@ -17,6 +18,8 @@ class RandomChar extends Component {
 	componentDidMount() {
 		this.updateCharacter();
 	}
+
+	isImgNotFound = url => url.includes('image_not_available');
 
 	updateCharacter = () => {
 		const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
@@ -27,6 +30,7 @@ class RandomChar extends Component {
 				this.setState({
 					character: obj,
 					loading: false,
+					imgNotFound: this.isImgNotFound(obj.thumbnail),
 				});
 			})
 			.catch(() => {
@@ -46,8 +50,9 @@ class RandomChar extends Component {
 	};
 
 	render() {
-		const { character, loading, error } = this.state;
+		const { character, loading, error, imgNotFound } = this.state;
 		const { name, description, thumbnail, homepage, wiki } = character;
+		console.log(thumbnail);
 
 		const errorMessage = error ? <ErrorMessage /> : null;
 		const spinner = loading ? <Spinner /> : null;
@@ -58,7 +63,11 @@ class RandomChar extends Component {
 				{spinner}
 				{loading || error ? null : (
 					<div className='randomchar__block'>
-						<img src={thumbnail} alt='Random character' className='randomchar__img' />
+						<img
+							src={thumbnail}
+							alt='Random character'
+							className={imgNotFound ? 'randomchar__imgNotFound' : 'randomchar__img'}
+						/>
 						<div className='randomchar__info'>
 							<p className='randomchar__name'>{name}</p>
 							{description ? (
