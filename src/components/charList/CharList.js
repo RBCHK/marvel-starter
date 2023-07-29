@@ -36,12 +36,24 @@ class CharList extends Component {
 		return (
 			<div className='char__list'>
 				<ul className='char__grid'>
-					{characters.map(character => (
-						<li key={character.id} className='char__item'>
-							<img src={character.thumbnail} alt={character.name} />
-							<div className='char__name'>{character.name}</div>
-						</li>
-					))}
+					{characters.map(character => {
+						const imgNotAvailable =
+							character.thumbnail ===
+							'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
+								? { objectFit: 'unset' }
+								: { objectFit: 'cover' };
+
+						return (
+							<li key={character.id} className='char__item'>
+								<img
+									src={character.thumbnail}
+									alt={character.name}
+									style={imgNotAvailable}
+								/>
+								<div className='char__name'>{character.name}</div>
+							</li>
+						);
+					})}
 				</ul>
 				<button className='button button__main button__long'>
 					<div className='inner'>load more</div>
