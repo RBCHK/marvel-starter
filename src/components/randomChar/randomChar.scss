@@ -19,7 +19,7 @@
 	&__imgNotFound {
 		width: 180px;
 		height: 180px;
-		object-fit: contain;
+		object-fit: unset;
 	}
 	&__info {
 		display: grid;
