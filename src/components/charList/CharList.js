@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import MarvelService from '../../services/MarvelService';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -108,6 +109,10 @@ const View = ({ characters, onCharSelected }) => {
 			</ul>
 		</>
 	);
+};
+
+CharList.propTypes = {
+	onCharSelected: PropTypes.func,
 };
 
 export default CharList;
